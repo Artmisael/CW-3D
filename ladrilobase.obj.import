@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/ladrilobase.obj-e647c71a39f1ab080399857b5966a45d.mesh"
+
+[deps]
+
+files=[ "res://.import/ladrilobase.obj-e647c71a39f1ab080399857b5966a45d.mesh" ]
+
+source_file="res://ladrilobase.obj"
+dest_files=[ "res://.import/ladrilobase.obj-e647c71a39f1ab080399857b5966a45d.mesh", "res://.import/ladrilobase.obj-e647c71a39f1ab080399857b5966a45d.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

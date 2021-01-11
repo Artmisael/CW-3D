@@ -1,0 +1,127 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "dia"
+length = 24.0
+loop = true
+step = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:environment:background_sky:sun_color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 6, 12, 18 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0.654902, 0, 1 ), Color( 0.537255, 0.203922, 0, 1 ), Color( 1, 0.654902, 0, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:environment:background_sky:sun_latitude")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 6, 12, 18 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 35.0, 15.0, -5.0, 15.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:environment:background_sky:sun_longitude")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 6, 12, 12.1, 18 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 90.0, 180.0, -180.0, -90.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:environment:background_sky:sun_energy")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 6, 12, 18 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.5, 0.0, 0.5 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("DirectionalLight2:rotation_degrees")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 6, 11.9, 12, 18 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 210, 0, 0 ), Vector3( 210, -90, 0 ), Vector3( 210, -180, 0 ), Vector3( 210, 180, 0 ), Vector3( 210, 90, 0 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("DirectionalLight2:light_energy")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 12 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.5 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("DirectionalLight2:light_color")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 6, 12, 18 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 0.980392, 0.713726, 1 ), Color( 0, 0.0431373, 0.486275, 1 ), Color( 0.960784, 1, 0.780392, 1 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath(".:environment:background_sky:sky_top_color")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 12 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.647059, 0.839216, 0.945098, 1 ), Color( 0, 0.0196078, 0.286275, 1 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath(".:environment:background_sky:sky_energy")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 12 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.1 ]
+}
+
+[node name="WorldEnvironment" type="WorldEnvironment"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/dia = SubResource( 1 )
+
+[node name="DirectionalLight2" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0 )
+layers = 2147483663
+light_color = Color( 1, 0.993508, 0.905215, 1 )
+light_energy = 0.917225
+shadow_enabled = true

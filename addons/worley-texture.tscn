@@ -1,0 +1,92 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+uniform float max_z = 1.0;
+uniform float max_distance = 0.5;
+uniform vec3 worley_point_01 = vec3(0.2,0.5,0.1);
+uniform vec3 worley_point_02 = vec3(0.8,0.3,0.5);
+uniform vec3 worley_point_03 = vec3(0.4,0.7,0.7);
+uniform vec3 worley_point_04 = vec3(0.6,0.9,0.8);
+uniform vec3 worley_point_05 = vec3(0.1,0.4,0.6);
+uniform vec3 worley_point_06 = vec3(0.0,0.6,0.9);
+uniform vec3 worley_point_07 = vec3(0.3,0.8,0.2);
+uniform vec3 worley_point_08 = vec3(0.5,0.1,0.3);
+uniform vec3 worley_point_09 = vec3(0.7,0.2,0.4);
+uniform vec3 worley_point_10 = vec3(0.9,0.0,0.0);
+
+float worley_distance(vec3 point, vec3 worley_point, float p_max){
+	float value = p_max;
+	
+	for (float z = -1.0;z<1.1;z+=1.1){
+		for (float y = -1.0;y<1.1;y+=1.1){
+			for (float x = -1.0;x<1.1;x+=1.1){
+				vec3 delta = worley_point - point + vec3(x,y,z);
+				float distance = length (delta);
+				if (distance<value){
+					value = distance;
+				}
+			}
+		}
+	}
+	
+	return value;
+}
+
+float  worly_value(vec3 pos){
+	float value = max_distance;
+	vec3 fpos = mod(pos, 1.0);
+	
+	value = worley_distance(pos, worley_point_01,value);
+	value = worley_distance(pos, worley_point_02,value);
+	value = worley_distance(pos, worley_point_03,value);
+	value = worley_distance(pos, worley_point_04,value);
+	value = worley_distance(pos, worley_point_05,value);
+	value = worley_distance(pos, worley_point_06,value);
+	value = worley_distance(pos, worley_point_07,value);
+	value = worley_distance(pos, worley_point_08,value);
+	value = worley_distance(pos, worley_point_09,value);
+	value = worley_distance(pos, worley_point_10,value);
+	
+	return clamp(value/max_distance,0.0,1.1);
+}
+
+
+void fragment() {
+	float z = floor(UV.y *max_z);
+	float y =  (UV.y*max_z)-z;
+	vec3 pos = vec3(UV.x,y,z/max_z);
+	vec4 result = vec4(0.0,0.0,0.0,1.0);
+	
+	result.r = worly_value(pos);
+	result.g = worly_value(pos);
+	result.b = worly_value(pos);
+	
+	COLOR = result;
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/max_z = 1.0
+shader_param/max_distance = 0.5
+shader_param/worley_point_01 = Vector3( 0.2, 0.5, 0.1 )
+shader_param/worley_point_02 = Vector3( 0.8, 0.3, 0.5 )
+shader_param/worley_point_03 = Vector3( 0.4, 0.7, 0.7 )
+shader_param/worley_point_04 = Vector3( 0.6, 0.9, 0.8 )
+shader_param/worley_point_05 = Vector3( 0.1, 0.4, 0.6 )
+shader_param/worley_point_06 = Vector3( 0, 0.6, 0.9 )
+shader_param/worley_point_07 = Vector3( 0.3, 0.8, 0.2 )
+shader_param/worley_point_08 = Vector3( 0.5, 0.1, 0.3 )
+shader_param/worley_point_09 = Vector3( 0.7, 0.2, 0.4 )
+shader_param/worley_point_10 = Vector3( 0.9, 0, 0 )
+
+[node name="ColorRect" type="ColorRect"]
+material = SubResource( 2 )
+margin_top = -0.840912
+margin_right = 256.0
+margin_bottom = 255.159
+__meta__ = {
+"_edit_use_anchors_": false
+}

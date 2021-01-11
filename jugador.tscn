@@ -1,0 +1,108 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://jugador.gd" type="Script" id=1]
+[ext_resource path="res://construciones/repetidor.tscn" type="PackedScene" id=2]
+[ext_resource path="res://construciones/Recolector.tscn" type="PackedScene" id=3]
+
+[sub_resource type="Environment" id=1]
+
+[sub_resource type="SphereMesh" id=2]
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="SphereMesh" id=4]
+material = SubResource( 3 )
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0, 1, 0, 1 )
+
+[sub_resource type="SphereMesh" id=6]
+material = SubResource( 5 )
+
+[sub_resource type="SpatialMaterial" id=7]
+albedo_color = Color( 0, 0, 1, 1 )
+
+[sub_resource type="SphereMesh" id=8]
+material = SubResource( 7 )
+
+[sub_resource type="SphereMesh" id=9]
+
+[node name="jugador" type="Spatial"]
+script = ExtResource( 1 )
+modelo_colector = ExtResource( 3 )
+modelo_repetidor = ExtResource( 2 )
+
+[node name="camara" type="Camera" parent="." groups=[
+"Jugador",
+]]
+cull_mask = 2147483649
+environment = SubResource( 1 )
+current = true
+size = 100.0
+
+[node name="compas" type="Spatial" parent="camara"]
+transform = Transform( 0.02, 0, 0, 0, 0.02, 0, 0, 0, 0.02, -0.4, -0.2, -0.5 )
+
+[node name="centro" type="MeshInstance" parent="camara/compas"]
+layers = 15
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="eje_X" type="MeshInstance" parent="camara/compas/centro"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0 )
+layers = 15
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="eje_Y" type="MeshInstance" parent="camara/compas/centro"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
+layers = 15
+mesh = SubResource( 6 )
+material/0 = null
+
+[node name="eje_Z" type="MeshInstance" parent="camara/compas/centro"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5 )
+layers = 15
+mesh = SubResource( 8 )
+material/0 = null
+
+[node name="RayCast" type="RayCast" parent="camara"]
+transform = Transform( 1, 0, 0, -4.47035e-08, 1, -5.96046e-08, 2.98023e-08, 7.45058e-09, 1, 0, 0, 0 )
+cast_to = Vector3( 0, 0, -50 )
+collide_with_areas = true
+
+[node name="lights" type="Spatial" parent="camara"]
+
+[node name="SpotLight1" type="SpotLight" parent="camara/lights"]
+layers = 15
+spot_range = 50.0
+spot_angle = 12.0
+
+[node name="SpotLight2" type="SpotLight" parent="camara/lights"]
+layers = 15
+spot_range = 25.0
+spot_angle = 25.0
+
+[node name="SpotLight3" type="SpotLight" parent="camara/lights"]
+layers = 15
+spot_range = 15.0
+spot_angle = 40.0
+
+[node name="SpotLight4" type="SpotLight" parent="camara/lights"]
+layers = 15
+spot_range = 120.0
+spot_angle = 50.0
+
+[node name="Position3D" type="Spatial" parent="camara"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.01 )
+
+[node name="MeshInstance" type="MeshInstance" parent="camara"]
+transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 20, 0, 0, -25 )
+mesh = SubResource( 9 )
+material/0 = null
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

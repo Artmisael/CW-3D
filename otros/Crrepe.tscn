@@ -1,0 +1,147 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://MeshInstance.gd" type="Script" id=1]
+[ext_resource path="res://otros/Crrepe.gd" type="Script" id=2]
+
+
+[sub_resource type="SpatialMaterial" id=1]
+flags_transparent = true
+albedo_color = Color( 0.709804, 0.901961, 0.113725, 0.505882 )
+emission_enabled = true
+emission = Color( 0.709804, 0.901961, 0.113725, 0.505882 )
+emission_energy = 0.0
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="SphereMesh" id=2]
+material = SubResource( 1 )
+radius = 0.5
+height = 1.0
+radial_segments = 12
+rings = 3
+
+[sub_resource type="Curve3D" id=3]
+_data = {
+"points": PoolVector3Array(  ),
+"tilts": PoolRealArray(  )
+}
+
+[sub_resource type="SpatialMaterial" id=4]
+
+[sub_resource type="CubeMesh" id=5]
+material = SubResource( 4 )
+size = Vector3( 0.5, 0.5, 0.5 )
+
+[sub_resource type="SpatialMaterial" id=6]
+flags_transparent = true
+albedo_color = Color( 0.133333, 0.694118, 0.298039, 0.505882 )
+emission_enabled = true
+emission = Color( 0.133333, 0.694118, 0.298039, 0.505882 )
+emission_energy = 0.0
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="SphereMesh" id=7]
+material = SubResource( 6 )
+radius = 0.5
+height = 1.0
+radial_segments = 12
+rings = 3
+
+[sub_resource type="SpatialMaterial" id=8]
+flags_transparent = true
+albedo_color = Color( 1, 1, 1, 0.505882 )
+emission_enabled = true
+emission = Color( 1, 1, 1, 0.505882 )
+emission_energy = 0.0
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="SphereMesh" id=9]
+material = SubResource( 8 )
+radius = 0.5
+height = 1.0
+radial_segments = 12
+rings = 3
+
+[sub_resource type="SpatialMaterial" id=10]
+flags_transparent = true
+albedo_color = Color( 0, 0, 0, 0.498039 )
+emission_enabled = true
+emission = Color( 1, 1, 1, 0.505882 )
+emission_energy = 0.0
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="SphereMesh" id=11]
+material = SubResource( 10 )
+radius = 0.5
+height = 1.0
+radial_segments = 12
+rings = 3
+
+[sub_resource type="BoxShape" id=12]
+
+[node name="Crrepe" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="Lima1" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, 0.5 )
+mesh = SubResource( 2 )
+material/0 = null
+script = ExtResource( 1 )
+
+[node name="Path" type="Path" parent="Lima1"]
+curve = SubResource( 3 )
+
+[node name="Follow" type="PathFollow" parent="Lima1/Path"]
+transform = Transform( 0.704483, 0.0701546, -0.706245, 0.101036, 0.975054, 0.197641, 0.702494, -0.21059, 0.679819, 0.945864, -0.937964, -1 )
+offset = 2.90013
+
+[node name="MeshInstance" type="MeshInstance" parent="Lima1/Path/Follow"]
+mesh = SubResource( 5 )
+material/0 = null
+
+[node name="Verde1" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.452929, 0.733404, 0.519947 )
+mesh = SubResource( 7 )
+material/0 = null
+
+[node name="Blanco1" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.588637, -0.644707, 0.513953 )
+mesh = SubResource( 9 )
+material/0 = null
+
+[node name="Negro1" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.448206, -0.373755, 0.384574 )
+mesh = SubResource( 11 )
+material/0 = null
+
+[node name="MeshInstance8" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.532297, -0.39906, -0.659384 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="MeshInstance7" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.433407, -0.463274, -0.34704 )
+visible = false
+mesh = SubResource( 7 )
+material/0 = null
+
+[node name="MeshInstance6" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.458316, 0.416299, -0.538355 )
+visible = false
+mesh = SubResource( 9 )
+material/0 = null
+
+[node name="MeshInstance5" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.462972, 0.416183, -0.473316 )
+visible = false
+mesh = SubResource( 11 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 12 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.819152, 0.573576, 0, -0.573576, 0.819152, 0.5, 5.5, 9.967 )
