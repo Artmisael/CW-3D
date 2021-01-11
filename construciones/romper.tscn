@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://ladrilobase.obj" type="ArrayMesh" id=1]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 0.133333, 0.694118, 0.298039, 1 )
+
+[sub_resource type="CubeMesh" id=2]
+size = Vector3( 0.1, 3, 1 )
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_color = Color( 0.345098, 0.258824, 0.176471, 1 )
+
+[node name="romper" type="CSGCombiner"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 4 )
+
+[node name="fuera" type="CSGMesh" parent="."]
+transform = Transform( 1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0 )
+mesh = ExtResource( 1 )
+material = SubResource( 1 )
+
+[node name="CSGMesh" type="CSGMesh" parent="fuera"]
+operation = 2
+mesh = SubResource( 2 )
+material = SubResource( 3 )
+
+[node name="CSGMesh3" type="CSGMesh" parent="fuera"]
+transform = Transform( 0.433013, -0.5, 0.75, 0.25, 0.866025, 0.433013, -0.866025, 0, 0.5, 1.1, 0, 0.7 )
+operation = 2
+mesh = SubResource( 2 )
+material = SubResource( 3 )
+
+[node name="CSGMesh2" type="CSGMesh" parent="fuera"]
+transform = Transform( 0.836516, -0.258819, -0.482963, 0.224144, 0.965926, -0.12941, 0.5, 0, 0.866025, 0, 0, 0.909091 )
+operation = 2
+mesh = SubResource( 2 )
+material = SubResource( 3 )

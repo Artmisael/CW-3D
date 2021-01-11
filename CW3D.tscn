@@ -134,3 +134,4 @@ shadow_enabled = true
 [node name="edificios" type="Spatial" parent="."]
 [connection signal="camara" from="jugador" to="terreno" method="_on_jugador_camara"]
 [connection signal="ejecutar" from="jugador" to="terreno" method="_on_jugador_ejecutar"]
+[connection signal="ver" from="jugador" to="terreno" method="_on_jugador_ver"]

@@ -7,14 +7,14 @@ var movimiento = Vector3()
 var seleccion = null
 var seleccion_ubicacio = Vector3.ZERO
 var estado_camara = 1
+var cursor = 0
 var edificios = []
 signal camara
 signal ejecutar
-
+signal ver
 
 func _ready():
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	pass # Replace with function body.
 	
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -25,24 +25,16 @@ func _input(event):
 		$camara/RayCast.force_raycast_update()
 		var cosa = $camara/RayCast.get_collider()
 		var ubicacion = $camara/RayCast.get_collision_point()+1*$camara/Position3D.get_global_transform().origin-get_global_transform().origin
+		var espacio = $camara/RayCast.get_collision_point()-1*$camara/Position3D.get_global_transform().origin-get_global_transform().origin
 		if cosa!=null:
 			if cosa.is_in_group("terreno_seleccionable"):
-				emit_signal("ejecutar",cosa,ubicacion)
+				emit_signal("ejecutar",instrucion,cosa,ubicacion,espacio)
 	if event.is_action_pressed("opcion_1"):
-		$camara.set_projection(0)
-		$camara.set_zfar(100.0)
-		$camara.transform.origin.z = 0
-		emit_signal("camara",1)
+		_camara(1)
 	if event.is_action_pressed("opcion_2"):
-		$camara.set_projection(0)
-		$camara.set_zfar(100)
-		emit_signal("camara",2)
-		$camara.transform.origin.z = 0
+		_camara(2)
 	if event.is_action_pressed("opcion_3"):
-		$camara.set_projection(1)
-		$camara.set_zfar(150)
-		emit_signal("camara",3)
-		$camara.transform.origin.z = 50
+		_camara(3)
 		
 func _physics_process(delta):
 	if Input.is_action_pressed("ui_right"):
@@ -57,7 +49,13 @@ func _physics_process(delta):
 	
 	var direction = Vector3.ZERO
 	if Input.is_action_just_pressed("ui_cancel"):
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		if cursor == 0:
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			cursor = 1
+		else:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			cursor = 0
+			
 	if Input.is_action_pressed("adelante"):
 		direction-=transform.basis.z
 	if Input.is_action_pressed("atras"):
@@ -88,10 +86,25 @@ func _physics_process(delta):
 				var capa = cosa.get_parent()
 				var terreno = capa.get_parent()
 				if terreno.is_in_group("terreno"):
+					emit_signal("ver",capa,ubicacion)
 					terreno._seleccionar(capa,ubicacion,"terreno")
 			seleccion = cosa
 			seleccion_ubicacio = ubicacion
-		
+			
+func _camara(modo):
+	if modo == 1:
+		$camara.set_projection(0)
+		$camara.set_zfar(100.0)
+		$camara.transform.origin.z = 0
+	if modo == 2:
+		$camara.set_projection(0)
+		$camara.set_zfar(50.0)
+		$camara.transform.origin.z = 0
+	if modo == 3:
+		$camara.set_projection(1)
+		$camara.set_zfar(150.0)
+		$camara.transform.origin.z = 50
+	emit_signal("camara",modo)
 
 func _on_Timer_timeout():
 	pass
