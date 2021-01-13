@@ -8,6 +8,7 @@ onready var terranos = [$Tierra_0,$Tierra_1]
 onready var camaras = [$Tierra_0/camara,$Tierra_1/camara]
 onready var sismicas = [$Tierra_0/sismica,$Tierra_1/sismica]
 onready var radares = [$Tierra_0/radar,$Tierra_1/radar]
+onready var selecciones = [$Tierra_0/seleccion,$Tierra_1/seleccion]
 var dx=0
 var dy=0
 var dz=0
@@ -18,7 +19,7 @@ func _ready():
 		noise[i].seed = randi()
 		noise[i].octaves = 2+i
 		noise[i].period = 20-i*5
-	make_terreno(noise)
+	make_terreno(noise)	
 	
 func make_terreno(noises):
 	for Tierra in (2):
@@ -73,19 +74,54 @@ func make_terreno(noises):
 						radares[Tierra].set_cell_item(x,z-1,y,5)
 						radares[Tierra].set_cell_item(x,z-2,y,5)
 					
-func _seleccionar(cosa,ubicacion,nomod):
+func _coordenada(ubicacion):
+	var coord_0 = $Tierra_0.world_to_map($Tierra_0.to_local(ubicacion))
+	var coord_1 = $Tierra_1.world_to_map($Tierra_1.to_local(ubicacion))
+	var ubic_0 = $Tierra_0.to_global($Tierra_0.map_to_world(coord_0.x,coord_0.y,coord_0.z))
+	var ubic_1 = $Tierra_1.to_global($Tierra_1.map_to_world(coord_1.x,coord_1.y,coord_1.z))
+	if (ubic_0).distance_squared_to(ubicacion)<(ubic_1).distance_squared_to(ubicacion):
+		return [0,coord_0,ubic_0]
+	else:
+		return [1,coord_1,ubic_1]
+		
+func _on_jugador_ver(instrucion,cosa,ubicacion,espacio):
 	$Tierra_0/seleccion.clear()
 	$Tierra_1/seleccion.clear()
-	if cosa == $Tierra_0:
-		var coordenadas = cosa.world_to_map(ubicacion)
-		$Tierra_0/seleccion.set_cell_item(coordenadas.x,coordenadas.y,coordenadas.z,9)
-	if cosa == $Tierra_1:
-		var coordenadas = cosa.world_to_map(ubicacion-Vector3(1,1,1))
-		$Tierra_1/seleccion.set_cell_item(coordenadas.x,coordenadas.y,coordenadas.z,9)
-func _on_jugador_ver(cosa,ubicacion,nomod):
-	pass # Replace with function body.
+	if cosa == null:
+		return
+	var coordenadas = Vector3.ZERO
+	var Tierra = 0
+	if instrucion == 0:
+		coordenadas = cosa.world_to_map(cosa.to_local(ubicacion))
+		if cosa.get_parent() == $Tierra_1:
+			Tierra = 1
+		selecciones[Tierra].set_cell_item(coordenadas.x,coordenadas.y,coordenadas.z,9)		
+	elif instrucion == 1:
+		coordenadas = cosa.world_to_map(cosa.to_local(ubicacion))
+		if cosa.get_parent() == $Tierra_1:
+			Tierra = 1
+		var simiento=camaras[Tierra].get_cell_item(coordenadas.x,coordenadas.y,coordenadas.z)
+		var lugar=camaras[Tierra].get_cell_item(coordenadas.x,coordenadas.y+1,coordenadas.z)
+		if simiento != -1 and simiento != 3 and lugar == -1:
+			selecciones[Tierra].set_cell_item(coordenadas.x,coordenadas.y+1,coordenadas.z,8)
+		else:
+			selecciones[Tierra].set_cell_item(coordenadas.x,coordenadas.y+1,coordenadas.z,12)
+	elif instrucion == 2:
+		var eje = _coordenada(ubicacion)
+		var ubic_1 = _coordenada(espacio)
+		var ubic_2 = _coordenada(ubic_1[2]*2-eje[2])
+		selecciones[eje[0]].set_cell_item(eje[1].x,eje[1].y,eje[1].z,9)
+		selecciones[ubic_1[0]].set_cell_item(ubic_1[1].x,ubic_1[1].y,ubic_1[1].z,8)
+		var tierra = camaras[Tierra].get_cell_item(ubic_2[1].x,ubic_2[1].y,ubic_2[1].z)
+		var piedra = radares[Tierra].get_cell_item(ubic_2[1].x,ubic_2[1].y,ubic_2[1].z)
+		if tierra == -1 and piedra == -1:
+			selecciones[ubic_2[0]].set_cell_item(ubic_2[1].x,ubic_2[1].y,ubic_2[1].z,8)
+		else:
+			selecciones[ubic_2[0]].set_cell_item(ubic_2[1].x,ubic_2[1].y,ubic_2[1].z,12)
 
-func _on_jugador_camara(estado):
+func _on_jugador_camara(estado):	
+	$Tierra_0/seleccion.clear()
+	$Tierra_1/seleccion.clear()
 	if estado == 1:
 		$Tierra_0/camara.show()
 		$Tierra_0/sismica.hide()
@@ -103,10 +139,17 @@ func _on_jugador_camara(estado):
 		$Tierra_1/sismica.hide()
 
 func _on_jugador_ejecutar(instrucion,cosa,ubicacion,espacio):
-	if instrucion == 0:
-		if cosa.get_parent() == $Tierra_0:
-			var coordenadas = cosa.world_to_map(ubicacion)
-			cosa.set_cell_item(coordenadas.x,coordenadas.y,coordenadas.z,-1)
+	#print(ubicacion)
+	var Tierra=0
+	var coordenadas = cosa.world_to_map(cosa.to_local(ubicacion))
+	if instrucion == 0:		
+		#if cosa.get_parent() == $Tierra_0:
+			#cosa.set_cell_item(coordenadas.x,coordenadas.y,coordenadas.z,-1)
 		if cosa.get_parent() == $Tierra_1:
-			var coordenadas = cosa.world_to_map(ubicacion-Vector3(1,1,1))
-			cosa.set_cell_item(coordenadas.x,coordenadas.y,coordenadas.z,-1)
+			Tierra = 1
+			#cosa.set_cell_item(coordenadas.x,coordenadas.y,coordenadas.z,-1)
+		camaras[Tierra].set_cell_item(coordenadas.x,coordenadas.y,coordenadas.z,-1)
+	#print(cosa.to_global(cosa.map_to_world(coordenadas.x,coordenadas.y,coordenadas.z)))
+	print(Tierra)
+	print(_coordenada(ubicacion)[0])
+	print()

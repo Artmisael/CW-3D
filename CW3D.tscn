@@ -41,10 +41,11 @@ __meta__ = {
 ]]
 mesh_library = ExtResource( 1 )
 data = {
-"cells": PoolIntArray(  )
+"cells": PoolIntArray( 655379, 2, 536870916 )
 }
 __meta__ = {
-"_editor_clip_": 0
+"_editor_clip_": 0,
+"_editor_floor_": Vector3( 0, 10, 0 )
 }
 
 [node name="sismica" type="GridMap" parent="terreno/Tierra_0"]
@@ -96,10 +97,11 @@ __meta__ = {
 ]]
 mesh_library = ExtResource( 1 )
 data = {
-"cells": PoolIntArray(  )
+"cells": PoolIntArray( 524304, 8, 1073741824 )
 }
 __meta__ = {
-"_editor_clip_": 0
+"_editor_clip_": 0,
+"_editor_floor_": Vector3( 0, 8, 0 )
 }
 
 [node name="sismica" type="GridMap" parent="terreno/Tierra_1"]

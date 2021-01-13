@@ -14,7 +14,7 @@ signal ejecutar
 signal ver
 
 func _ready():
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	pass
 	
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -29,12 +29,29 @@ func _input(event):
 		if cosa!=null:
 			if cosa.is_in_group("terreno_seleccionable"):
 				emit_signal("ejecutar",instrucion,cosa,ubicacion,espacio)
+	if event.is_action_pressed("cambiar"):
+		if instrucion == 0:
+			instrucion = 1
+			$camara/Planos/romper.hide()
+			$camara/Planos/Spatial.show()
+			$camara/Planos/repetidor.hide()
+		elif instrucion == 1:
+			instrucion = 2
+			$camara/Planos/romper.hide()
+			$camara/Planos/Spatial.hide()
+			$camara/Planos/repetidor.show()
+		elif instrucion == 2:
+			instrucion = 0
+			$camara/Planos/romper.show()
+			$camara/Planos/Spatial.hide()
+			$camara/Planos/repetidor.hide()
 	if event.is_action_pressed("opcion_1"):
 		_camara(1)
 	if event.is_action_pressed("opcion_2"):
 		_camara(2)
 	if event.is_action_pressed("opcion_3"):
 		_camara(3)
+		
 		
 func _physics_process(delta):
 	if Input.is_action_pressed("ui_right"):
@@ -80,14 +97,16 @@ func _physics_process(delta):
 		$camara/RayCast.force_raycast_update()
 		var cosa = $camara/RayCast.get_collider()
 		var ubicacion = $camara/RayCast.get_collision_point()+1*$camara/Position3D.get_global_transform().origin-get_global_transform().origin
+		var espacio = $camara/RayCast.get_collision_point()-1*($camara/Position3D.get_global_transform().origin-get_global_transform().origin)
 		if cosa != seleccion or ubicacion != seleccion_ubicacio:
 			if cosa!=null:
-				
 				var capa = cosa.get_parent()
 				var terreno = capa.get_parent()
 				if terreno.is_in_group("terreno"):
-					emit_signal("ver",capa,ubicacion)
-					terreno._seleccionar(capa,ubicacion,"terreno")
+					emit_signal("ver",instrucion,cosa,ubicacion,espacio)
+					#terreno._seleccionar(capa,ubicacion,"terreno")
+			else:
+				emit_signal("ver",instrucion,cosa,ubicacion,espacio)
 			seleccion = cosa
 			seleccion_ubicacio = ubicacion
 			
@@ -105,6 +124,7 @@ func _camara(modo):
 		$camara.set_zfar(150.0)
 		$camara.transform.origin.z = 50
 	emit_signal("camara",modo)
+	estado_camara = modo
 
 func _on_Timer_timeout():
 	pass
