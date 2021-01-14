@@ -12,8 +12,10 @@ var edificios = []
 signal camara
 signal ejecutar
 signal ver
+signal nuevo_edificio
 
 func _ready():
+	$camara/AnimationPlayer.play("planos")
 	pass
 	
 func _input(event):
@@ -21,11 +23,11 @@ func _input(event):
 		rotate_y(deg2rad(-event.relative.x*.5))
 		$camara.rotate_x(deg2rad(-event.relative.y*.5))
 		$camara.rotation.x = clamp($camara.rotation.x,deg2rad(-100),deg2rad(100))
-	if event.is_action_pressed("ejecucion"):		
+	if event.is_action_pressed("ejecucion"):
 		$camara/RayCast.force_raycast_update()
 		var cosa = $camara/RayCast.get_collider()
 		var ubicacion = $camara/RayCast.get_collision_point()+1*$camara/Position3D.get_global_transform().origin-get_global_transform().origin
-		var espacio = $camara/RayCast.get_collision_point()-1*$camara/Position3D.get_global_transform().origin-get_global_transform().origin
+		var espacio = $camara/RayCast.get_collision_point()-1*($camara/Position3D.get_global_transform().origin-get_global_transform().origin)
 		if cosa!=null:
 			if cosa.is_in_group("terreno_seleccionable"):
 				emit_signal("ejecutar",instrucion,cosa,ubicacion,espacio)
@@ -33,17 +35,17 @@ func _input(event):
 		if instrucion == 0:
 			instrucion = 1
 			$camara/Planos/romper.hide()
-			$camara/Planos/Spatial.show()
+			$camara/Planos/colector.show()
 			$camara/Planos/repetidor.hide()
 		elif instrucion == 1:
 			instrucion = 2
 			$camara/Planos/romper.hide()
-			$camara/Planos/Spatial.hide()
+			$camara/Planos/colector.hide()
 			$camara/Planos/repetidor.show()
 		elif instrucion == 2:
 			instrucion = 0
 			$camara/Planos/romper.show()
-			$camara/Planos/Spatial.hide()
+			$camara/Planos/colector.hide()
 			$camara/Planos/repetidor.hide()
 	if event.is_action_pressed("opcion_1"):
 		_camara(1)
@@ -99,13 +101,7 @@ func _physics_process(delta):
 		var ubicacion = $camara/RayCast.get_collision_point()+1*$camara/Position3D.get_global_transform().origin-get_global_transform().origin
 		var espacio = $camara/RayCast.get_collision_point()-1*($camara/Position3D.get_global_transform().origin-get_global_transform().origin)
 		if cosa != seleccion or ubicacion != seleccion_ubicacio:
-			if cosa!=null:
-				var capa = cosa.get_parent()
-				var terreno = capa.get_parent()
-				if terreno.is_in_group("terreno"):
-					emit_signal("ver",instrucion,cosa,ubicacion,espacio)
-					#terreno._seleccionar(capa,ubicacion,"terreno")
-			else:
+			if cosa == null or cosa.is_in_group("terreno_seleccionable"):
 				emit_signal("ver",instrucion,cosa,ubicacion,espacio)
 			seleccion = cosa
 			seleccion_ubicacio = ubicacion
@@ -128,3 +124,18 @@ func _camara(modo):
 
 func _on_Timer_timeout():
 	pass
+
+func _on_terreno_construir(edificio,ubicacion,direccion):
+	if edificio == 1:
+		var colector = modelo_colector.instance()
+		edificios.append(colector)
+		emit_signal("nuevo_edificio",colector)
+		colector.translate(ubicacion)
+	if edificio == 2:
+		var repetidor = modelo_repetidor.instance()
+		edificios.append(repetidor)
+		emit_signal("nuevo_edificio",repetidor)
+		repetidor.translate(ubicacion)		
+		var dire = repetidor.get_rotation()
+		repetidor.rotate_x(.8)
+		print(direccion,dire)

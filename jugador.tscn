@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://jugador.gd" type="Script" id=1]
 [ext_resource path="res://construciones/repetidor.tscn" type="PackedScene" id=2]
@@ -28,6 +28,23 @@ albedo_color = Color( 0, 0, 1, 1 )
 material = SubResource( 7 )
 
 [sub_resource type="SphereMesh" id=9]
+
+[sub_resource type="Animation" id=10]
+resource_name = "planos"
+length = 10.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Planos:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 10 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 360, 0 ) ]
+}
 
 [node name="jugador" type="Spatial"]
 script = ExtResource( 1 )
@@ -76,21 +93,30 @@ collide_with_areas = true
 [node name="lights" type="Spatial" parent="camara"]
 
 [node name="SpotLight1" type="SpotLight" parent="camara/lights"]
+visible = false
 layers = 15
 spot_range = 50.0
 spot_angle = 12.0
 
 [node name="SpotLight2" type="SpotLight" parent="camara/lights"]
+visible = false
 layers = 15
 spot_range = 25.0
 spot_angle = 25.0
 
 [node name="SpotLight3" type="SpotLight" parent="camara/lights"]
+visible = false
 layers = 15
 spot_range = 15.0
 spot_angle = 40.0
 
 [node name="SpotLight4" type="SpotLight" parent="camara/lights"]
+visible = false
+layers = 15
+spot_range = 12.0
+spot_angle = 50.0
+
+[node name="moderador" type="SpotLight" parent="camara/lights"]
 layers = 15
 spot_range = 120.0
 spot_angle = 50.0
@@ -110,9 +136,9 @@ mesh = SubResource( 9 )
 material/0 = null
 
 [node name="Planos" type="Spatial" parent="camara"]
-transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.4, -0.2, -0.5 )
+transform = Transform( 0.1, 0, 6.51683e-08, 0, 0.1, 0, -6.51683e-08, 0, 0.1, 0.4, -0.2, -0.5 )
 
-[node name="Spatial" parent="camara/Planos" instance=ExtResource( 3 )]
+[node name="colector" parent="camara/Planos" instance=ExtResource( 3 )]
 transform = Transform( -0.866026, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866026, 0, 0, 0 )
 visible = false
 
@@ -122,6 +148,9 @@ visible = false
 
 [node name="romper" parent="camara/Planos" instance=ExtResource( 4 )]
 transform = Transform( 0.267312, -0.141752, -0.953127, -0.43598, 0.8643, -0.250815, 0.859341, 0.48259, 0.169237, 0, 0, 0 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="camara"]
+anims/planos = SubResource( 10 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.5

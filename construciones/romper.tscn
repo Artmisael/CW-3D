@@ -35,3 +35,15 @@ transform = Transform( 0.836516, -0.258819, -0.482963, 0.224144, 0.965926, -0.12
 operation = 2
 mesh = SubResource( 2 )
 material = SubResource( 3 )
+
+[node name="CSGMesh4" type="CSGMesh" parent="fuera"]
+transform = Transform( -0.820526, 0.1154, -0.559838, 0.224144, 0.965926, -0.12941, 0.525829, -0.231668, -0.818433, -0.390338, 0, -0.632707 )
+operation = 2
+mesh = SubResource( 2 )
+material = SubResource( 3 )
+
+[node name="CSGMesh5" type="CSGMesh" parent="fuera"]
+transform = Transform( 0.650397, 0.564549, 0.5082, -0.444853, 0.825399, -0.347594, -0.615703, 0, 0.787978, 0.369709, -0.443883, 0.282933 )
+operation = 2
+mesh = SubResource( 2 )
+material = SubResource( 3 )
