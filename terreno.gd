@@ -1,6 +1,6 @@
 extends Spatial
 
-var size = (40)
+onready var size = (40)
 var noise = []
 var espacios = .2
 var recursos = .5
@@ -13,6 +13,7 @@ var dx=0
 var dy=0
 var dz=0
 signal construir
+signal tamanio
 			
 func _ready():
 	for i in (3):
@@ -21,6 +22,7 @@ func _ready():
 		noise[i].octaves = 2+i
 		noise[i].period = 20-i*5
 	make_terreno(noise)	
+	emit_signal("tamanio",size)
 	
 func make_terreno(noises):
 	for Tierra in (2):

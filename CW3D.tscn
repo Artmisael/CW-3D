@@ -150,4 +150,5 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 11, 10 )
 [connection signal="ejecutar" from="jugador" to="terreno" method="_on_jugador_ejecutar"]
 [connection signal="ver" from="jugador" to="terreno" method="_on_jugador_ver"]
 [connection signal="construir" from="terreno" to="edificios" method="_on_terreno_construir"]
+[connection signal="tamanio" from="terreno" to="jugador" method="_on_terreno_tamanio"]
 [connection signal="edificio_nuevo" from="edificios" to="jugador" method="_on_edificios_edificio_nuevo"]

@@ -11,9 +11,11 @@ var cursor = 0
 var edificios = []
 var energia = 20
 var i = 0
+var tamanio_mapa
 signal camara
 signal ejecutar
 signal ver
+signal deselecinar
 
 func _ready():
 	$camara/AnimationPlayer.play("planos")
@@ -32,26 +34,13 @@ func _input(event):
 		if cosa!=null:
 			if cosa.is_in_group("terreno_seleccionable"):
 				emit_signal("ejecutar",instrucion,cosa,ubicacion,espacio)
+			elif cosa.is_in_group("selecionable"):
+				cosa._entrar()
 	if event.is_action_pressed("cambiar"):
 		instrucion+=1
 		if instrucion == 4:
 			instrucion=0
 		_instruccion(instrucion)
-		if instrucion == 0:
-			instrucion = 1
-			$camara/Planos/romper.hide()
-			$camara/Planos/colector.show()
-			$camara/Planos/repetidor.hide()
-		elif instrucion == 1:
-			instrucion = 2
-			$camara/Planos/romper.hide()
-			$camara/Planos/colector.hide()
-			$camara/Planos/repetidor.show()
-		elif instrucion == 2:
-			instrucion = 0
-			$camara/Planos/romper.show()
-			$camara/Planos/colector.hide()
-			$camara/Planos/repetidor.hide()
 	if event.is_action_pressed("opcion_1"):
 		_camara(1)
 	if event.is_action_pressed("opcion_2"):
@@ -94,8 +83,8 @@ func _physics_process(delta):
 		direction+=transform.basis.y
 	direction = direction.normalized()
 	transform.origin+=direction*delta*10
-	transform.origin.x = clamp(transform.origin.x,-10,110)
-	transform.origin.z = clamp(transform.origin.z,-10,110)
+	transform.origin.x = clamp(transform.origin.x,5,tamanio_mapa-5)
+	transform.origin.z = clamp(transform.origin.z,5,tamanio_mapa-5)
 	
 	$camara/compas.rotation = -$camara.rotation
 	$camara/compas/centro.rotation = -rotation
@@ -105,9 +94,13 @@ func _physics_process(delta):
 		var cosa = $camara/RayCast.get_collider()
 		var ubicacion = $camara/RayCast.get_collision_point()+1*$camara/Position3D.get_global_transform().origin-get_global_transform().origin
 		var espacio = $camara/RayCast.get_collision_point()-1*($camara/Position3D.get_global_transform().origin-get_global_transform().origin)
-		if cosa != seleccion or ubicacion != seleccion_ubicacio:
+		if cosa != seleccion or ubicacion.distance_squared_to(seleccion_ubicacio) > .5:
 			if cosa == null or cosa.is_in_group("terreno_seleccionable"):
 				emit_signal("ver",instrucion,cosa,ubicacion,espacio)
+				emit_signal("deselecinar")
+			elif cosa.is_in_group("selecionable"):
+				cosa._selecionado()
+				emit_signal("ver",instrucion,null,ubicacion,espacio)
 			seleccion = cosa
 			seleccion_ubicacio = ubicacion
 			
@@ -132,8 +125,9 @@ func _on_Timer_timeout():
 	pass
 
 func _on_edificios_edificio_nuevo(edificio):
-	edificios.append(edificio)
-	pass # Replace with function body.
+	edificios.append(edificio)	
+	#edificio._conectar(self)
+	self.connect("deselecinar",edificio,"_deselecionar")
 
 func _instruccion(orden):	
 	if instrucion == 0:
@@ -153,3 +147,6 @@ func _instruccion(orden):
 	else:
 		$camara/Planos/Metralla.hide()
 		
+func _on_terreno_tamanio(tamanio):
+	tamanio_mapa = tamanio
+	pass # Replace with function body.
