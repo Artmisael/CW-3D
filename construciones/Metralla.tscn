@@ -1,0 +1,215 @@
+[gd_scene load_steps=15 format=2]
+
+[sub_resource type="CylinderMesh" id=1]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 1.0
+radial_segments = 8
+rings = 1
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0.239216, 0.145098, 0.145098, 1 )
+metallic = 1.0
+
+[sub_resource type="CylinderMesh" id=3]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.1
+radial_segments = 8
+rings = 1
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0.266667, 0.278431, 0.54902, 1 )
+metallic = 0.5
+
+[sub_resource type="CylinderMesh" id=5]
+top_radius = 0.1
+bottom_radius = 0.1
+height = 1.5
+radial_segments = 8
+rings = 1
+
+[sub_resource type="SpatialMaterial" id=6]
+albedo_color = Color( 0.878431, 0.698039, 0.698039, 1 )
+metallic = 1.0
+
+[sub_resource type="SphereMesh" id=7]
+radius = 0.02
+height = 0.04
+radial_segments = 8
+rings = 4
+
+[sub_resource type="SpatialMaterial" id=8]
+albedo_color = Color( 1, 1, 0, 1 )
+metallic = 0.5
+
+[sub_resource type="CylinderMesh" id=9]
+material = SubResource( 8 )
+top_radius = 0.03
+bottom_radius = 0.03
+height = 0.03
+radial_segments = 8
+rings = 1
+
+[sub_resource type="CubeMesh" id=10]
+size = Vector3( 0.3, 0.5, 0.3 )
+
+[sub_resource type="SpatialMaterial" id=11]
+albedo_color = Color( 0.619608, 0.0235294, 0.0941176, 1 )
+
+[sub_resource type="PrismMesh" id=12]
+size = Vector3( 0.1, 0.1, 0.1 )
+
+[sub_resource type="SpatialMaterial" id=13]
+albedo_color = Color( 0, 1, 1, 1 )
+emission_enabled = true
+emission = Color( 1, 1, 1, 1 )
+emission_energy = 0.1
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="Animation" id=14]
+resource_name = "metralla"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("metralla2/vanda2/vanda1:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 60, 0 ) ]
+}
+
+[node name="Metralla" type="Spatial"]
+
+[node name="patas" type="Spatial" parent="."]
+
+[node name="MeshInstance" type="MeshInstance" parent="patas"]
+transform = Transform( 1.19249e-08, -0.707107, -0.707107, 0, 0.707107, -0.707107, 1, 8.43216e-09, 8.43216e-09, -0.75, -0.75, 8.94366e-09 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="patas"]
+transform = Transform( 1.19249e-08, 0.707107, -0.707107, 0, 0.707107, 0.707107, 1, -8.43216e-09, 8.43216e-09, 0.75, -0.75, -8.94366e-09 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="patas"]
+transform = Transform( 8.43216e-09, 8.43216e-09, -1, -0.707107, 0.707107, 0, 0.707107, 0.707107, 1.19249e-08, 8.94366e-09, -0.75, 0.75 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+
+[node name="MeshInstance4" type="MeshInstance" parent="patas"]
+transform = Transform( 8.43216e-09, -8.43216e-09, -1, 0.707107, 0.707107, 0, 0.707107, -0.707107, 1.19249e-08, -8.94366e-09, -0.75, -0.75 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+
+[node name="MeshInstance5" type="MeshInstance" parent="patas"]
+transform = Transform( 1.12057e-08, 4.07855e-09, -1, -0.34202, 0.939693, 0, 0.939693, 0.34202, 1.19249e-08, -2.98122e-09, -0.5, -0.25 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+
+[node name="MeshInstance7" type="MeshInstance" parent="patas"]
+transform = Transform( -0.939693, -0.34202, 1.50996e-07, -0.34202, 0.939693, 0, -1.4189e-07, -5.16436e-08, -1, 0.25, -0.5, 3.7749e-08 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+
+[node name="MeshInstance8" type="MeshInstance" parent="patas"]
+transform = Transform( 2.94985e-07, 1.07366e-07, 1, -0.34202, 0.939693, 0, -0.939693, -0.34202, 3.13917e-07, -7.84791e-08, -0.5, 0.25 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+
+[node name="MeshInstance6" type="MeshInstance" parent="patas"]
+transform = Transform( 0.939693, 0.34202, 0, -0.34202, 0.939693, 0, 0, 0, 1, -0.25, -0.5, 0 )
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+
+[node name="metralla2" type="Spatial" parent="."]
+
+[node name="vanda2" type="MeshInstance" parent="metralla2"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -3.25841e-08, 0.2 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="vanda1" type="MeshInstance" parent="metralla2/vanda2"]
+transform = Transform( 0.749471, 0, 0.662037, 0, 1, 0, -0.662037, 0, 0.749471, 0, 0.4, 4.76837e-08 )
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="MeshInstance6" type="MeshInstance" parent="metralla2/vanda2/vanda1"]
+transform = Transform( 0.15, 0, 0.259808, 0, 1, 0, -0.259808, 0, 0.15, 0.025, -0.6, -0.0433013 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="metralla2/vanda2/vanda1"]
+transform = Transform( 0.15, 0, -0.259808, 0, 1, 0, 0.259808, 0, 0.15, 0.025, -0.6, 0.0433012 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="metralla2/vanda2/vanda1"]
+transform = Transform( -0.15, 0, -0.259808, 0, 1, 0, 0.259808, 0, -0.15, -0.025, -0.6, 0.0433012 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
+
+[node name="MeshInstance4" type="MeshInstance" parent="metralla2/vanda2/vanda1"]
+transform = Transform( -0.3, 0, -1.04308e-07, 0, 1, 0, 1.04308e-07, 0, -0.3, -0.05, -0.6, -3.27826e-08 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
+
+[node name="MeshInstance5" type="MeshInstance" parent="metralla2/vanda2/vanda1"]
+transform = Transform( -0.15, 0, 0.259808, 0, 1, 0, -0.259808, 0, -0.15, -0.025, -0.6, -0.0433013 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
+
+[node name="MeshInstance7" type="MeshInstance" parent="metralla2/vanda2/vanda1"]
+transform = Transform( 0.3, 0, 0, 0, 1, 0, 0, 0, 0.3, 0.05, -0.6, -4.76837e-08 )
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
+
+[node name="balas" type="CPUParticles" parent="metralla2/vanda2/vanda1"]
+transform = Transform( 0.897509, -2.98023e-08, -0.440997, -2.98023e-08, 1, -2.23517e-08, 0.440997, 0, 0.897509, 0, 0, 0 )
+visible = false
+amount = 6
+lifetime = 0.5
+explosiveness = 0.5
+mesh = SubResource( 7 )
+direction = Vector3( 0, 1, 0 )
+spread = 0.5
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 20.0
+
+[node name="casquillos" type="CPUParticles" parent="metralla2/vanda2"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.139832, 0, 0 )
+visible = false
+amount = 6
+explosiveness = 0.5
+lifetime_randomness = 0.1
+local_coords = false
+mesh = SubResource( 9 )
+direction = Vector3( 0, 0, 0 )
+gravity = Vector3( 0, -5, 0 )
+
+[node name="cuerpo" type="MeshInstance" parent="metralla2"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 8.30896e-08, -0.51 )
+mesh = SubResource( 10 )
+material/0 = SubResource( 11 )
+
+[node name="MeshInstance" type="MeshInstance" parent="metralla2/cuerpo"]
+transform = Transform( 2, 0, 0, 0, -0.347297, 2.95442, 0, -1.96962, -0.520945, 0, 0, -0.2 )
+mesh = SubResource( 12 )
+material/0 = SubResource( 13 )
+
+[node name="SpotLight" type="SpotLight" parent="metralla2/cuerpo/MeshInstance"]
+transform = Transform( -0.5, 0, -1.62921e-07, -2.82909e-08, 0.492404, 0.0868241, 1.06964e-07, 0.0578827, -0.328269, 0, -0.016645, 0.0629322 )
+visible = false
+light_color = Color( 1, 0, 0, 1 )
+spot_range = 10.0
+spot_angle = 5.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/metralla = SubResource( 14 )

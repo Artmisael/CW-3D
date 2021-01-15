@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://jugador.gd" type="Script" id=1]
 [ext_resource path="res://construciones/repetidor.tscn" type="PackedScene" id=2]
 [ext_resource path="res://construciones/Recolector_apariencia.tscn" type="PackedScene" id=3]
 [ext_resource path="res://construciones/romper.tscn" type="PackedScene" id=4]
+[ext_resource path="res://construciones/Metralla.tscn" type="PackedScene" id=5]
 
 [sub_resource type="Environment" id=1]
 
@@ -64,24 +65,28 @@ transform = Transform( 0.02, 0, 0, 0, 0.02, 0, 0, 0, 0.02, -0.4, -0.2, -0.5 )
 
 [node name="centro" type="MeshInstance" parent="camara/compas"]
 layers = 15
+cast_shadow = 0
 mesh = SubResource( 2 )
 material/0 = null
 
 [node name="eje_X" type="MeshInstance" parent="camara/compas/centro"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0 )
 layers = 15
+cast_shadow = 0
 mesh = SubResource( 4 )
 material/0 = null
 
 [node name="eje_Y" type="MeshInstance" parent="camara/compas/centro"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 0 )
 layers = 15
+cast_shadow = 0
 mesh = SubResource( 6 )
 material/0 = null
 
 [node name="eje_Z" type="MeshInstance" parent="camara/compas/centro"]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5 )
 layers = 15
+cast_shadow = 0
 mesh = SubResource( 8 )
 material/0 = null
 
@@ -138,6 +143,10 @@ material/0 = null
 [node name="Planos" type="Spatial" parent="camara"]
 transform = Transform( 0.1, 0, 6.51683e-08, 0, 0.1, 0, -6.51683e-08, 0, 0.1, 0.4, -0.2, -0.5 )
 
+[node name="romper" parent="camara/Planos" instance=ExtResource( 4 )]
+transform = Transform( 0.267312, -0.141752, -0.953127, -0.43598, 0.8643, -0.250815, 0.859341, 0.48259, 0.169237, 0, 0, 0 )
+cast_shadow = 0
+
 [node name="colector" parent="camara/Planos" instance=ExtResource( 3 )]
 transform = Transform( -0.866026, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866026, 0, 0, 0 )
 visible = false
@@ -145,14 +154,15 @@ visible = false
 [node name="repetidor" parent="camara/Planos" instance=ExtResource( 2 )]
 transform = Transform( 0.867462, 0, -0.497504, 0, 1, 0, 0.497504, 0, 0.867462, 0, 0, 0 )
 visible = false
+cast_shadow = 0
 
-[node name="romper" parent="camara/Planos" instance=ExtResource( 4 )]
-transform = Transform( 0.267312, -0.141752, -0.953127, -0.43598, 0.8643, -0.250815, 0.859341, 0.48259, 0.169237, 0, 0, 0 )
+[node name="Metralla" parent="camara/Planos" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 5.68434e-14, 0, 1, 0, -5.68434e-14, 0, 1, 0, 0, 0 )
+visible = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="camara"]
 anims/planos = SubResource( 10 )
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.5
 autostart = true
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

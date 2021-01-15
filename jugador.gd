@@ -9,10 +9,11 @@ var seleccion_ubicacio = Vector3.ZERO
 var estado_camara = 1
 var cursor = 0
 var edificios = []
+var energia = 20
+var i = 0
 signal camara
 signal ejecutar
 signal ver
-signal nuevo_edificio
 
 func _ready():
 	$camara/AnimationPlayer.play("planos")
@@ -32,6 +33,10 @@ func _input(event):
 			if cosa.is_in_group("terreno_seleccionable"):
 				emit_signal("ejecutar",instrucion,cosa,ubicacion,espacio)
 	if event.is_action_pressed("cambiar"):
+		instrucion+=1
+		if instrucion == 4:
+			instrucion=0
+		_instruccion(instrucion)
 		if instrucion == 0:
 			instrucion = 1
 			$camara/Planos/romper.hide()
@@ -123,19 +128,28 @@ func _camara(modo):
 	estado_camara = modo
 
 func _on_Timer_timeout():
+	energia = min(energia+1,20)
 	pass
 
-func _on_terreno_construir(edificio,ubicacion,direccion):
-	if edificio == 1:
-		var colector = modelo_colector.instance()
-		edificios.append(colector)
-		emit_signal("nuevo_edificio",colector)
-		colector.translate(ubicacion)
-	if edificio == 2:
-		var repetidor = modelo_repetidor.instance()
-		edificios.append(repetidor)
-		emit_signal("nuevo_edificio",repetidor)
-		repetidor.translate(ubicacion)		
-		var dire = repetidor.get_rotation()
-		repetidor.rotate_x(.8)
-		print(direccion,dire)
+func _on_edificios_edificio_nuevo(edificio):
+	edificios.append(edificio)
+	pass # Replace with function body.
+
+func _instruccion(orden):	
+	if instrucion == 0:
+		$camara/Planos/romper.show()
+	else:
+		$camara/Planos/romper.hide()		
+	if instrucion == 1:
+		$camara/Planos/colector.show()
+	else:
+		$camara/Planos/colector.hide()
+	if instrucion == 2:
+		$camara/Planos/repetidor.show()
+	else:
+		$camara/Planos/repetidor.hide()
+	if instrucion == 3:
+		$camara/Planos/Metralla.show()
+	else:
+		$camara/Planos/Metralla.hide()
+		

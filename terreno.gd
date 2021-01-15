@@ -1,6 +1,6 @@
 extends Spatial
 
-var size = (60)
+var size = (40)
 var noise = []
 var espacios = .2
 var recursos = .5
@@ -133,6 +133,12 @@ func _on_jugador_ver(instrucion,cosa,ubicacion,espacio):
 			selecciones[ubic_2[0]].set_cell_item(ubic_2[1].x,ubic_2[1].y,ubic_2[1].z,8)
 		else:
 			selecciones[ubic_2[0]].set_cell_item(ubic_2[1].x,ubic_2[1].y,ubic_2[1].z,12)
+	elif instrucion == 3:
+		var eje = _coordenada(ubicacion)
+		var ubic_1 = _coordenada(espacio)
+		var ubic_2 = _coordenada(ubic_1[2]*2-eje[2])
+		selecciones[eje[0]].set_cell_item(eje[1].x,eje[1].y,eje[1].z,9)
+		selecciones[ubic_1[0]].set_cell_item(ubic_1[1].x,ubic_1[1].y,ubic_1[1].z,8)
 
 func _on_jugador_camara(estado):	
 	$Tierra_0/seleccion.clear()
@@ -203,4 +209,11 @@ func _on_jugador_ejecutar(instrucion,cosa,ubicacion,espacio):
 			emit_signal("construir",instrucion,ubic_1[2],ubic_2[2]-ubic_1[2])
 		else:
 			emit_signal("mensaje","le falta espacio")
+	elif instrucion == 3:
+		var eje = _coordenada(ubicacion)
+		var ubic_1 = _coordenada(espacio)
+		var ubic_2 = _coordenada(ubic_1[2]*2-eje[2])
+		selecciones[eje[0]].set_cell_item(eje[1].x,eje[1].y,eje[1].z,9)
+		selecciones[ubic_1[0]].set_cell_item(ubic_1[1].x,ubic_1[1].y,ubic_1[1].z,8)
+		emit_signal("construir",instrucion,ubic_1[2],ubic_2[2]-ubic_1[2])
 		

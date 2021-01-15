@@ -1,14 +1,18 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://blokes.meshlib" type="MeshLibrary" id=1]
 [ext_resource path="res://jugador.tscn" type="PackedScene" id=2]
 [ext_resource path="res://edificios.gd" type="Script" id=3]
 [ext_resource path="res://terreno.gd" type="Script" id=4]
+[ext_resource path="res://construciones/repetidor.tscn" type="PackedScene" id=5]
+[ext_resource path="res://construciones/Recolector_apariencia.tscn" type="PackedScene" id=6]
+[ext_resource path="res://construciones/Metralla.tscn" type="PackedScene" id=7]
+[ext_resource path="res://construciones/Nave_Principal.tscn" type="PackedScene" id=8]
 
 [node name="Spatial" type="Spatial"]
 
 [node name="jugador" parent="." instance=ExtResource( 2 )]
-transform = Transform( -0.739185, -0.0743507, -0.669387, 0, 0.993888, -0.110394, 0.673503, -0.0816015, -0.734667, 0, 15, 0 )
+transform = Transform( -0.739185, -0.0743507, -0.669387, 0, 0.993888, -0.110394, 0.673503, -0.0816015, -0.734667, 0, 10, 0 )
 
 [node name="terreno" type="Spatial" parent="." groups=[
 "terreno",
@@ -102,7 +106,7 @@ data = {
 }
 __meta__ = {
 "_editor_clip_": 0,
-"_editor_floor_": Vector3( 0, 9, 0 )
+"_editor_floor_": Vector3( 0, 1, 0 )
 }
 
 [node name="sismica" type="GridMap" parent="terreno/Tierra_1"]
@@ -136,8 +140,14 @@ shadow_enabled = true
 
 [node name="edificios" type="Spatial" parent="."]
 script = ExtResource( 3 )
+modelo_colector = ExtResource( 6 )
+modelo_repetidor = ExtResource( 5 )
+modelo_metralla = ExtResource( 7 )
+
+[node name="nave_principal" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 11, 10 )
 [connection signal="camara" from="jugador" to="terreno" method="_on_jugador_camara"]
 [connection signal="ejecutar" from="jugador" to="terreno" method="_on_jugador_ejecutar"]
-[connection signal="nuevo_edificio" from="jugador" to="edificios" method="_on_jugador_nuevo_edificio"]
 [connection signal="ver" from="jugador" to="terreno" method="_on_jugador_ver"]
-[connection signal="construir" from="terreno" to="jugador" method="_on_terreno_construir"]
+[connection signal="construir" from="terreno" to="edificios" method="_on_terreno_construir"]
+[connection signal="edificio_nuevo" from="edificios" to="jugador" method="_on_edificios_edificio_nuevo"]
