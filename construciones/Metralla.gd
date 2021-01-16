@@ -1,6 +1,8 @@
 extends Spatial
 
-signal entrar
+export (bool) onready var inicial = false
+var edificios = []
+
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -8,16 +10,22 @@ signal entrar
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$seleccion.altura = Vector3(0,2,0)
 	pass # Replace with function body.
 
+func _entrar():
+	pass
+
+func _construir(edificios_anteriores):
+	for i in edificios_anteriores:
+		edificios.append(i)
+	pass
+	
+func _conectar(jugador):
+	pass
 
 func _deselecionar():
 	$seleccion/selecionado.hide()
 	print("selec")
-	
-func _entrar():
-	emit_signal("entrar",to_global(Vector3.ZERO))
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass

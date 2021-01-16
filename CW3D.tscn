@@ -46,7 +46,7 @@ __meta__ = {
 ]]
 mesh_library = ExtResource( 1 )
 data = {
-"cells": PoolIntArray( 655379, 2, 4 )
+"cells": PoolIntArray( 655379, 2, 536870916 )
 }
 __meta__ = {
 "_editor_clip_": 0,

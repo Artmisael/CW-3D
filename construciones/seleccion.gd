@@ -20,10 +20,15 @@ func _ready():
 func _selecionado():
 	$selecionado.show()
 	
+func _deselecionar():
+	$selecionado.hide()
+	
+	
 func _entrar():
 	$selecionado.hide()
 	var padre=get_parent()
-	padre.entrar()
-	emit_signal("entrar",get_parent(),to_global(altura))
+	padre._entrar()
+	return([to_global(altura),get_parent()])
+	
 	
 	

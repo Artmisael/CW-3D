@@ -2,6 +2,7 @@ extends Spatial
 
 export (PackedScene) var modelo_colector
 export (PackedScene) var modelo_repetidor
+var ubicacion = null
 var instrucion = 0
 var movimiento = Vector3()
 var seleccion = null
@@ -15,7 +16,7 @@ var tamanio_mapa
 signal camara
 signal ejecutar
 signal ver
-signal deselecinar
+signal deselecionar
 
 func _ready():
 	$camara/AnimationPlayer.play("planos")
@@ -34,8 +35,8 @@ func _input(event):
 		if cosa!=null:
 			if cosa.is_in_group("terreno_seleccionable"):
 				emit_signal("ejecutar",instrucion,cosa,ubicacion,espacio)
-			elif cosa.is_in_group("selecionable"):
-				cosa._entrar()
+			elif cosa.is_in_group("selecionable"):				
+				_entrar(cosa)
 	if event.is_action_pressed("cambiar"):
 		instrucion+=1
 		if instrucion == 4:
@@ -97,9 +98,9 @@ func _physics_process(delta):
 		if cosa != seleccion or ubicacion.distance_squared_to(seleccion_ubicacio) > .5:
 			if cosa == null or cosa.is_in_group("terreno_seleccionable"):
 				emit_signal("ver",instrucion,cosa,ubicacion,espacio)
-				emit_signal("deselecinar")
+				emit_signal("deselecionar")
 			elif cosa.is_in_group("selecionable"):
-				cosa._selecionado()
+				_seleccionar(cosa)
 				emit_signal("ver",instrucion,null,ubicacion,espacio)
 			seleccion = cosa
 			seleccion_ubicacio = ubicacion
@@ -124,16 +125,16 @@ func _on_Timer_timeout():
 	energia = min(energia+1,20)
 	pass
 
-func _on_edificios_edificio_nuevo(edificio):
-	edificios.append(edificio)	
-	#edificio._conectar(self)
-	self.connect("deselecinar",edificio,"_deselecionar")
+func _on_edificios_edificio_nuevo(edificio):	
+	edificio._construir(edificios)
+	edificios.append(edificio)
+	edificio._conectar(self)
 
 func _instruccion(orden):	
 	if instrucion == 0:
 		$camara/Planos/romper.show()
 	else:
-		$camara/Planos/romper.hide()		
+		$camara/Planos/romper.hide()
 	if instrucion == 1:
 		$camara/Planos/colector.show()
 	else:
@@ -150,3 +151,14 @@ func _instruccion(orden):
 func _on_terreno_tamanio(tamanio):
 	tamanio_mapa = tamanio
 	pass # Replace with function body.
+	
+func _seleccionar(cosa):
+	if not (is_connected("deselecionar",cosa,"_deselecionar")):
+		connect("deselecionar",cosa,"_deselecionar")
+	pass
+	
+func _entrar(cosa):	
+	ubicacion =  cosa._entrar()[1]
+	translate(cosa._entrar()[0])
+	pass
+	

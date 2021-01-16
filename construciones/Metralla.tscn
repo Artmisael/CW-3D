@@ -1,6 +1,7 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://seleccion.tscn" type="PackedScene" id=1]
+[ext_resource path="res://construciones/Metralla.gd" type="Script" id=2]
 
 [sub_resource type="CylinderMesh" id=1]
 top_radius = 0.1
@@ -13,45 +14,45 @@ rings = 1
 albedo_color = Color( 0.239216, 0.145098, 0.145098, 1 )
 metallic = 1.0
 
-[sub_resource type="CylinderMesh" id=3]
+[sub_resource type="SphereMesh" id=3]
+radius = 0.02
+height = 0.04
+radial_segments = 8
+rings = 4
+
+[sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 1, 1, 0, 1 )
+metallic = 0.5
+
+[sub_resource type="CylinderMesh" id=5]
+material = SubResource( 4 )
+top_radius = 0.03
+bottom_radius = 0.03
+height = 0.03
+radial_segments = 8
+rings = 1
+
+[sub_resource type="CylinderMesh" id=6]
 top_radius = 0.1
 bottom_radius = 0.1
 height = 0.1
 radial_segments = 8
 rings = 1
 
-[sub_resource type="SpatialMaterial" id=4]
+[sub_resource type="SpatialMaterial" id=7]
 albedo_color = Color( 0.266667, 0.278431, 0.54902, 1 )
 metallic = 0.5
 
-[sub_resource type="CylinderMesh" id=5]
+[sub_resource type="CylinderMesh" id=8]
 top_radius = 0.1
 bottom_radius = 0.1
 height = 1.5
 radial_segments = 8
 rings = 1
 
-[sub_resource type="SpatialMaterial" id=6]
+[sub_resource type="SpatialMaterial" id=9]
 albedo_color = Color( 0.878431, 0.698039, 0.698039, 1 )
 metallic = 1.0
-
-[sub_resource type="SphereMesh" id=7]
-radius = 0.02
-height = 0.04
-radial_segments = 8
-rings = 4
-
-[sub_resource type="SpatialMaterial" id=8]
-albedo_color = Color( 1, 1, 0, 1 )
-metallic = 0.5
-
-[sub_resource type="CylinderMesh" id=9]
-material = SubResource( 8 )
-top_radius = 0.03
-bottom_radius = 0.03
-height = 0.03
-radial_segments = 8
-rings = 1
 
 [sub_resource type="CubeMesh" id=10]
 size = Vector3( 0.3, 0.5, 0.3 )
@@ -100,6 +101,7 @@ flip_faces = true
 [node name="Metralla" type="Spatial" groups=[
 "selecionable",
 ]]
+script = ExtResource( 2 )
 
 [node name="patas" type="Spatial" parent="."]
 
@@ -125,68 +127,78 @@ material/0 = SubResource( 2 )
 
 [node name="metralla2" type="Spatial" parent="."]
 
-[node name="vanda2" type="MeshInstance" parent="metralla2"]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -3.25841e-08, 0.2 )
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
+[node name="custom" type="Spatial" parent="metralla2"]
 
-[node name="vanda1" type="MeshInstance" parent="metralla2/vanda2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 4.76837e-08 )
-mesh = SubResource( 3 )
-material/0 = SubResource( 4 )
+[node name="SpotLight" type="SpotLight" parent="metralla2/custom"]
+transform = Transform( -1, -1.62479e-13, -3.25842e-07, -7.10543e-15, 1, -4.76836e-07, 3.25842e-07, -4.76836e-07, -1, 0, 0.2, -0.318291 )
+light_color = Color( 1, 0, 0, 1 )
+spot_range = 10.0
+spot_angle = 5.0
 
-[node name="MeshInstance6" type="MeshInstance" parent="metralla2/vanda2/vanda1"]
-transform = Transform( 0.15, 0, 0.259808, 0, 1, 0, -0.259808, 0, 0.15, 0.025, -0.6, -0.0433013 )
-mesh = SubResource( 5 )
-material/0 = SubResource( 6 )
-
-[node name="MeshInstance2" type="MeshInstance" parent="metralla2/vanda2/vanda1"]
-transform = Transform( 0.15, 0, -0.259808, 0, 1, 0, 0.259808, 0, 0.15, 0.025, -0.6, 0.0433012 )
-mesh = SubResource( 5 )
-material/0 = SubResource( 6 )
-
-[node name="MeshInstance3" type="MeshInstance" parent="metralla2/vanda2/vanda1"]
-transform = Transform( -0.15, 0, -0.259808, 0, 1, 0, 0.259808, 0, -0.15, -0.025, -0.6, 0.0433012 )
-mesh = SubResource( 5 )
-material/0 = SubResource( 6 )
-
-[node name="MeshInstance4" type="MeshInstance" parent="metralla2/vanda2/vanda1"]
-transform = Transform( -0.3, 0, -1.04308e-07, 0, 1, 0, 1.04308e-07, 0, -0.3, -0.05, -0.6, -3.27826e-08 )
-mesh = SubResource( 5 )
-material/0 = SubResource( 6 )
-
-[node name="MeshInstance5" type="MeshInstance" parent="metralla2/vanda2/vanda1"]
-transform = Transform( -0.15, 0, 0.259808, 0, 1, 0, -0.259808, 0, -0.15, -0.025, -0.6, -0.0433013 )
-mesh = SubResource( 5 )
-material/0 = SubResource( 6 )
-
-[node name="MeshInstance7" type="MeshInstance" parent="metralla2/vanda2/vanda1"]
-transform = Transform( 0.3, 0, 0, 0, 1, 0, 0, 0, 0.3, 0.05, -0.6, -4.76837e-08 )
-mesh = SubResource( 5 )
-material/0 = SubResource( 6 )
-
-[node name="balas" type="CPUParticles" parent="metralla2/vanda2/vanda1"]
-transform = Transform( 0.897509, -2.98023e-08, -0.440997, -2.98023e-08, 1, -2.23517e-08, 0.440997, 0, 0.897509, 0, 0, 0 )
-visible = false
+[node name="balas" type="CPUParticles" parent="metralla2/custom"]
+transform = Transform( 0.897509, -2.98023e-08, -0.440997, -0.440997, -4.37114e-08, -0.897509, -4.90789e-08, 1, -6.15831e-08, 0, -9.77524e-08, 0.6 )
+emitting = false
 amount = 6
 lifetime = 0.5
 explosiveness = 0.5
-mesh = SubResource( 7 )
+randomness = 0.1
+mesh = SubResource( 3 )
 direction = Vector3( 0, 1, 0 )
 spread = 0.5
 gravity = Vector3( 0, 0, 0 )
 initial_velocity = 20.0
 
-[node name="casquillos" type="CPUParticles" parent="metralla2/vanda2"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.139832, 0, 0 )
-visible = false
+[node name="casquillos" type="CPUParticles" parent="metralla2/custom"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.139832, -3.25841e-08, 0.2 )
+emitting = false
 amount = 6
 explosiveness = 0.5
+randomness = 0.1
 lifetime_randomness = 0.1
 local_coords = false
-mesh = SubResource( 9 )
+mesh = SubResource( 5 )
 direction = Vector3( 0, 0, 0 )
 gravity = Vector3( 0, -5, 0 )
+
+[node name="vanda2" type="MeshInstance" parent="metralla2"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -3.25841e-08, 0.2 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 7 )
+
+[node name="vanda1" type="MeshInstance" parent="metralla2/vanda2"]
+transform = Transform( 0.610347, 0, 0.792134, 0, 1, 0, -0.792134, 0, 0.610347, 0, 0.4, 4.76837e-08 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 7 )
+
+[node name="MeshInstance6" type="MeshInstance" parent="metralla2/vanda2/vanda1"]
+transform = Transform( 0.15, 0, 0.259808, 0, 1, 0, -0.259808, 0, 0.15, 0.025, -0.6, -0.0433013 )
+mesh = SubResource( 8 )
+material/0 = SubResource( 9 )
+
+[node name="MeshInstance2" type="MeshInstance" parent="metralla2/vanda2/vanda1"]
+transform = Transform( 0.15, 0, -0.259808, 0, 1, 0, 0.259808, 0, 0.15, 0.025, -0.6, 0.0433012 )
+mesh = SubResource( 8 )
+material/0 = SubResource( 9 )
+
+[node name="MeshInstance3" type="MeshInstance" parent="metralla2/vanda2/vanda1"]
+transform = Transform( -0.15, 0, -0.259808, 0, 1, 0, 0.259808, 0, -0.15, -0.025, -0.6, 0.0433012 )
+mesh = SubResource( 8 )
+material/0 = SubResource( 9 )
+
+[node name="MeshInstance4" type="MeshInstance" parent="metralla2/vanda2/vanda1"]
+transform = Transform( -0.3, 0, -1.04308e-07, 0, 1, 0, 1.04308e-07, 0, -0.3, -0.05, -0.6, -3.27826e-08 )
+mesh = SubResource( 8 )
+material/0 = SubResource( 9 )
+
+[node name="MeshInstance5" type="MeshInstance" parent="metralla2/vanda2/vanda1"]
+transform = Transform( -0.15, 0, 0.259808, 0, 1, 0, -0.259808, 0, -0.15, -0.025, -0.6, -0.0433013 )
+mesh = SubResource( 8 )
+material/0 = SubResource( 9 )
+
+[node name="MeshInstance7" type="MeshInstance" parent="metralla2/vanda2/vanda1"]
+transform = Transform( 0.3, 0, 0, 0, 1, 0, 0, 0, 0.3, 0.05, -0.6, -4.76837e-08 )
+mesh = SubResource( 8 )
+material/0 = SubResource( 9 )
 
 [node name="cuerpo" type="MeshInstance" parent="metralla2"]
 transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 8.30896e-08, -0.51 )
@@ -198,13 +210,6 @@ transform = Transform( 2, 0, 0, 0, -0.347297, 2.95442, 0, -1.96962, -0.520945, 0
 mesh = SubResource( 12 )
 material/0 = SubResource( 13 )
 
-[node name="SpotLight" type="SpotLight" parent="metralla2/cuerpo/MeshInstance"]
-transform = Transform( -0.5, 0, -1.62921e-07, -2.82909e-08, 0.492404, 0.0868241, 1.06964e-07, 0.0578827, -0.328269, 0, -0.016645, 0.0629322 )
-visible = false
-light_color = Color( 1, 0, 0, 1 )
-spot_range = 10.0
-spot_angle = 5.0
-
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/metralla = SubResource( 14 )
 
@@ -214,7 +219,6 @@ anims/metralla = SubResource( 14 )
 shape = SubResource( 15 )
 
 [node name="selecionado" parent="seleccion" index="1"]
-visible = false
 mesh = SubResource( 17 )
 material/0 = null
 

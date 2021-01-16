@@ -1,6 +1,7 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://ladrilobase.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://construciones/Recolector_apariencia.gd" type="Script" id=2]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.266667, 0.552941, 0.305882, 1 )
@@ -168,6 +169,7 @@ radius = 5.0
 radius = 1.5
 
 [node name="Colector" type="Spatial"]
+script = ExtResource( 2 )
 
 [node name="base" type="CSGCombiner" parent="."]
 
