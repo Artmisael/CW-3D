@@ -57,10 +57,16 @@ func _physics_process(delta):
 		velocidad_giro = velocidad_giro/1.1
 		var lente = $camara.get_fov()
 		$camara.set_fov(lente/1.1) 
+		var zoom = $camara/Planos.get_translation()
+		$camara/Planos.set_translation(Vector3(zoom.x,zoom.y,zoom.z*1.1))
+		$camara/compas.set_translation(Vector3(-zoom.x,zoom.y,zoom.z*1.1))
 	if Input.is_action_just_pressed("girar_menos"):
 		velocidad_giro = velocidad_giro*1.1
 		var lente = $camara.get_fov()
 		$camara.set_fov(lente*1.1) 
+		var zoom = $camara/Planos.get_translation()
+		$camara/Planos.set_translation(Vector3(zoom.x,zoom.y,zoom.z/1.1))
+		$camara/compas.set_translation(Vector3(-zoom.x,zoom.y,zoom.z/1.1))
 	if Input.is_action_just_pressed("rapido_derecha"):
 		rotate_y(-45)
 	if Input.is_action_just_pressed("rapido_izquierda"):

@@ -90,6 +90,25 @@ cast_shadow = 0
 mesh = SubResource( 8 )
 material/0 = null
 
+[node name="Planos" type="Spatial" parent="camara"]
+transform = Transform( 0.1, 0, 6.51683e-08, 0, 0.1, 0, -6.51683e-08, 0, 0.1, 0.4, -0.2, -0.5 )
+
+[node name="romper" parent="camara/Planos" instance=ExtResource( 4 )]
+transform = Transform( 0.267312, -0.141752, -0.953127, -0.43598, 0.8643, -0.250815, 0.859341, 0.48259, 0.169237, 0, 0, 0 )
+cast_shadow = 0
+
+[node name="colector" parent="camara/Planos" instance=ExtResource( 3 )]
+transform = Transform( -0.866026, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866026, 0, 0, 0 )
+visible = false
+
+[node name="repetidor" parent="camara/Planos" instance=ExtResource( 2 )]
+transform = Transform( 0.867462, 0, -0.497504, 0, 1, 0, 0.497504, 0, 0.867462, 0, 0, 0 )
+visible = false
+
+[node name="Metralla" parent="camara/Planos" instance=ExtResource( 5 )]
+transform = Transform( 1, 0, 5.68434e-14, 0, 1, 0, -5.68434e-14, 0, 1, 0, 0, 0 )
+visible = false
+
 [node name="RayCast" type="RayCast" parent="camara"]
 transform = Transform( 1, 0, 0, -4.47035e-08, 1, -5.96046e-08, 2.98023e-08, 7.45058e-09, 1, 0, 0, 0 )
 cast_to = Vector3( 0, 0, -50 )
@@ -140,25 +159,6 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.01 )
 transform = Transform( 0.1, 0, 0, 0, 0.1, 0, 0, 0, 20, 0, 0, -25 )
 mesh = SubResource( 9 )
 material/0 = null
-
-[node name="Planos" type="Spatial" parent="camara"]
-transform = Transform( 0.1, 0, 6.51683e-08, 0, 0.1, 0, -6.51683e-08, 0, 0.1, 0.4, -0.2, -0.5 )
-
-[node name="romper" parent="camara/Planos" instance=ExtResource( 4 )]
-transform = Transform( 0.267312, -0.141752, -0.953127, -0.43598, 0.8643, -0.250815, 0.859341, 0.48259, 0.169237, 0, 0, 0 )
-cast_shadow = 0
-
-[node name="colector" parent="camara/Planos" instance=ExtResource( 3 )]
-transform = Transform( -0.866026, 0, 0.5, 0, 1, 0, -0.5, 0, -0.866026, 0, 0, 0 )
-visible = false
-
-[node name="repetidor" parent="camara/Planos" instance=ExtResource( 2 )]
-transform = Transform( 0.867462, 0, -0.497504, 0, 1, 0, 0.497504, 0, 0.867462, 0, 0, 0 )
-visible = false
-
-[node name="Metralla" parent="camara/Planos" instance=ExtResource( 5 )]
-transform = Transform( 1, 0, 5.68434e-14, 0, 1, 0, -5.68434e-14, 0, 1, 0, 0, 0 )
-visible = false
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="camara"]
 anims/planos = SubResource( 10 )
