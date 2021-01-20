@@ -155,7 +155,6 @@ visible = false
 [node name="repetidor" parent="camara/Planos" instance=ExtResource( 2 )]
 transform = Transform( 0.867462, 0, -0.497504, 0, 1, 0, 0.497504, 0, 0.867462, 0, 0, 0 )
 visible = false
-cast_shadow = 0
 
 [node name="Metralla" parent="camara/Planos" instance=ExtResource( 5 )]
 transform = Transform( 1, 0, 5.68434e-14, 0, 1, 0, -5.68434e-14, 0, 1, 0, 0, 0 )

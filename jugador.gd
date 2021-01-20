@@ -54,9 +54,13 @@ func _input(event):
 		
 func _physics_process(delta):	
 	if Input.is_action_just_pressed("girar_mas"):
-		velocidad_giro = velocidad_giro*1.5
+		velocidad_giro = velocidad_giro/1.1
+		var lente = $camara.get_fov()
+		$camara.set_fov(lente/1.1) 
 	if Input.is_action_just_pressed("girar_menos"):
-		velocidad_giro = velocidad_giro/1.5
+		velocidad_giro = velocidad_giro*1.1
+		var lente = $camara.get_fov()
+		$camara.set_fov(lente*1.1) 
 	if Input.is_action_just_pressed("rapido_derecha"):
 		rotate_y(-45)
 	if Input.is_action_just_pressed("rapido_izquierda"):

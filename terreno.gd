@@ -1,6 +1,6 @@
 extends Spatial
 
-onready var size = (40)
+onready var size = (20)
 var noise = []
 var espacios = .2
 var recursos = .5
