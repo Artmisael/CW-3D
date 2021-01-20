@@ -1,15 +1,22 @@
 extends Spatial
 
 signal entrar
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
+export onready var camara = "repetidor"
+var edificios
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$seleccion.altura = Vector3(0,2,0)
+	$seleccion.camara = camara
 	pass # Replace with function body.
+
+func _construir(edificios_anteriores):
+	edificios = edificios_anteriores
+	$CPUParticles.show()
+	pass
+	
+func _conectar(jugador):
+	pass
 
 
 func _deselecionar():

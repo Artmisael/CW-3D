@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://construciones/repetidor.gd" type="Script" id=1]
 [ext_resource path="res://seleccion.tscn" type="PackedScene" id=2]
@@ -70,6 +70,19 @@ albedo_color = Color( 0, 0, 1, 1 )
 [sub_resource type="SpatialMaterial" id=19]
 albedo_color = Color( 1, 0, 0, 1 )
 
+[sub_resource type="CapsuleShape" id=23]
+height = 2.0
+
+[sub_resource type="CapsuleMesh" id=24]
+flip_faces = true
+mid_height = 2.0
+radial_segments = 8
+rings = 1
+
+[sub_resource type="SpatialMaterial" id=25]
+flags_transparent = true
+albedo_color = Color( 1, 1, 0, 0.490196 )
+
 [sub_resource type="SpatialMaterial" id=20]
 params_billboard_mode = 3
 particles_anim_h_frames = 1
@@ -86,9 +99,7 @@ _data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.970588, 1 ), 0.0, 0.0, 0, 
 [node name="Repetidor" type="Spatial"]
 script = ExtResource( 1 )
 
-[node name="repetidor" type="CSGCombiner" parent="." groups=[
-"selecionable",
-]]
+[node name="repetidor" type="CSGCombiner" parent="."]
 
 [node name="patas" type="CSGMesh" parent="repetidor"]
 calculate_tangents = false
@@ -189,6 +200,15 @@ material = SubResource( 19 )
 
 [node name="seleccion" parent="." instance=ExtResource( 2 )]
 
+[node name="CollisionShape" parent="seleccion" index="0"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1, 0 )
+shape = SubResource( 23 )
+
+[node name="selecionado" parent="seleccion" index="1"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 1, 0 )
+mesh = SubResource( 24 )
+material/0 = SubResource( 25 )
+
 [node name="CPUParticles" type="CPUParticles" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0 )
 visible = false
@@ -201,3 +221,5 @@ spread = 180.0
 gravity = Vector3( 0, 0, 0 )
 initial_velocity = 5.0
 scale_amount_curve = SubResource( 22 )
+
+[editable path="seleccion"]

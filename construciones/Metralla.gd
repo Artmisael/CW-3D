@@ -16,12 +16,13 @@ func _entrar():
 	pass
 
 func _construir(edificios_anteriores):
-	for i in edificios_anteriores:
-		edificios.append(i)
+	edificios = edificios_anteriores
+	$AnimationPlayer.play("metralla")
 	pass
 	
 func _conectar(jugador):
 	pass
+	
 
 func _deselecionar():
 	$seleccion/selecionado.hide()

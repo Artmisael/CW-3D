@@ -1,8 +1,9 @@
-[gd_scene load_steps=33 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://construciones/Recolector_apariencia.tscn" type="PackedScene" id=1]
 [ext_resource path="res://construciones/Metralla.tscn" type="PackedScene" id=2]
-[ext_resource path="res://seleccion.tscn" type="PackedScene" id=3]
+[ext_resource path="res://construciones/repetidor.tscn" type="PackedScene" id=3]
+[ext_resource path="res://construciones/Nave_Principal.gd" type="Script" id=4]
 
 [sub_resource type="SphereMesh" id=1]
 
@@ -137,25 +138,15 @@ height = 9.0
 radial_segments = 8
 rings = 1
 
-[sub_resource type="SphereShape" id=27]
-
-[sub_resource type="SpatialMaterial" id=28]
-flags_transparent = true
-albedo_color = Color( 0, 1, 0, 0.490196 )
-
-[sub_resource type="SphereMesh" id=29]
-material = SubResource( 28 )
-flip_faces = true
-radius = 7.0
-height = 14.0
-radial_segments = 8
-rings = 4
-
 [node name="nave_principal" type="Spatial"]
+script = ExtResource( 4 )
 
-[node name="puente de mando" type="MeshInstance" parent="."]
+[node name="puente_de_mando" type="MeshInstance" parent="."]
 mesh = SubResource( 1 )
 material/0 = SubResource( 2 )
+
+[node name="Repetidor" parent="puente_de_mando" instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, -2 )
 
 [node name="CSGTorus" type="CSGTorus" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
@@ -433,15 +424,6 @@ transform = Transform( 0.707107, 0.707107, -1.15202e-07, 0, -1.62921e-07, -1, -0
 mesh = SubResource( 26 )
 material/0 = null
 
-[node name="seleccion" parent="." instance=ExtResource( 3 )]
-
-[node name="CollisionShape" parent="seleccion" index="0"]
-shape = SubResource( 27 )
-
-[node name="selecionado" parent="seleccion" index="1"]
-mesh = SubResource( 29 )
-material/0 = null
-
 [editable path="CSGTorus/recolectores/Colector"]
 
 [editable path="CSGTorus/recolectores/Colector2"]
@@ -449,5 +431,3 @@ material/0 = null
 [editable path="CSGTorus/recolectores/Colector3"]
 
 [editable path="CSGTorus/recolectores/Colector4"]
-
-[editable path="seleccion"]

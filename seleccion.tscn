@@ -3,7 +3,6 @@
 [ext_resource path="res://construciones/seleccion.gd" type="Script" id=1]
 
 [node name="seleccion" type="Area" groups=[
-"repiter",
 "selecionable",
 ]]
 collision_layer = 2147483653

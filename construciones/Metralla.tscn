@@ -98,9 +98,7 @@ albedo_color = Color( 1, 0, 0, 0.490196 )
 material = SubResource( 16 )
 flip_faces = true
 
-[node name="Metralla" type="Spatial" groups=[
-"selecionable",
-]]
+[node name="Metralla" type="Spatial"]
 script = ExtResource( 2 )
 
 [node name="patas" type="Spatial" parent="."]

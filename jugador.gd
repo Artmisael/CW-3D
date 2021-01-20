@@ -2,6 +2,7 @@ extends Spatial
 
 export (PackedScene) var modelo_colector
 export (PackedScene) var modelo_repetidor
+var velocidad_giro = 1
 var ubicacion = null
 var instrucion = 0
 var movimiento = Vector3()
@@ -13,6 +14,7 @@ var edificios = []
 var energia = 20
 var i = 0
 var tamanio_mapa
+
 signal camara
 signal ejecutar
 signal ver
@@ -50,15 +52,24 @@ func _input(event):
 		_camara(3)
 		
 		
-func _physics_process(delta):
+func _physics_process(delta):	
+	if Input.is_action_just_pressed("girar_mas"):
+		velocidad_giro = velocidad_giro*1.5
+	if Input.is_action_just_pressed("girar_menos"):
+		velocidad_giro = velocidad_giro/1.5
+	if Input.is_action_just_pressed("rapido_derecha"):
+		rotate_y(-45)
+	if Input.is_action_just_pressed("rapido_izquierda"):
+		rotate_y(45)
+	
 	if Input.is_action_pressed("ui_right"):
-		rotate_y(-1*delta)
+		rotate_y(-velocidad_giro*delta)
 	if Input.is_action_pressed("ui_left"):
-		rotate_y(1*delta)
+		rotate_y(velocidad_giro*delta)
 	if Input.is_action_pressed("ui_up"):
-		$camara.rotate_x(1*delta)
+		$camara.rotate_x(velocidad_giro*delta)
 	if Input.is_action_pressed("ui_down"):
-		$camara.rotate_x(-1*delta)
+		$camara.rotate_x(-velocidad_giro*delta)
 	$camara.rotation.x = clamp($camara.rotation.x,deg2rad(-100),deg2rad(100))
 	
 	var direction = Vector3.ZERO
@@ -84,8 +95,8 @@ func _physics_process(delta):
 		direction+=transform.basis.y
 	direction = direction.normalized()
 	transform.origin+=direction*delta*10
-	transform.origin.x = clamp(transform.origin.x,5,tamanio_mapa-5)
-	transform.origin.z = clamp(transform.origin.z,5,tamanio_mapa-5)
+	transform.origin.x = clamp(transform.origin.x,5,tamanio_mapa*2-5)
+	transform.origin.z = clamp(transform.origin.z,5,tamanio_mapa*2-5)
 	
 	$camara/compas.rotation = -$camara.rotation
 	$camara/compas/centro.rotation = -rotation
@@ -155,10 +166,15 @@ func _on_terreno_tamanio(tamanio):
 func _seleccionar(cosa):
 	if not (is_connected("deselecionar",cosa,"_deselecionar")):
 		connect("deselecionar",cosa,"_deselecionar")
+	cosa._seleccionado()
 	pass
 	
 func _entrar(cosa):	
+	if ubicacion != null:
+		ubicacion.show()
 	ubicacion =  cosa._entrar()[1]
-	translate(cosa._entrar()[0])
+	ubicacion.hide()
+	set_translation(cosa._entrar()[0]) 
+	#translate(cosa._entrar()[0])
 	pass
 	

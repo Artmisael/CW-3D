@@ -1,15 +1,18 @@
 extends Spatial
 
+var edificios
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
+func _construir(edificios_anteriores):
+	edificios = edificios_anteriores
+	$AnimationPlayer.play("Colector")
+	pass
+	
+func _conectar(jugador):
+	pass
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
