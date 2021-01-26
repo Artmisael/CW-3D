@@ -13,7 +13,7 @@ var cursor = 0
 var edificios = []
 var energia = 20
 var i = 0
-var tamanio_mapa
+var tamanio_mapa = 20
 
 signal camara
 signal ejecutar
@@ -147,9 +147,7 @@ func _on_Timer_timeout():
 	pass
 
 func _on_edificios_edificio_nuevo(edificio):	
-	edificio._construir(edificios)
-	edificios.append(edificio)
-	edificio._conectar(self)
+	_edificio_inicial(edificio)
 
 func _instruccion(orden):	
 	if instrucion == 0:
@@ -186,5 +184,27 @@ func _entrar(cosa):
 	ubicacion.hide()
 	set_translation(cosa._entrar()[0]) 
 	#translate(cosa._entrar()[0])
-	pass
+
+func _on_Metralla_edificio_inicial(edificio):
+	_edificio_inicial(edificio)
+func _on_Metralla2_edificio_inicial(edificio):
+	_edificio_inicial(edificio)
+func _on_Metralla3_edificio_inicial(edificio):
+	_edificio_inicial(edificio)
+func _on_Metralla4_edificio_inicial(edificio):
+	_edificio_inicial(edificio)
+func _on_Colector_edificio_inicial(edificio):
+	_edificio_inicial(edificio)
+func _on_Colector2_edificio_inicial(edificio):
+	_edificio_inicial(edificio)
+func _on_Colector3_edificio_inicial(edificio):
+	_edificio_inicial(edificio)
+func _on_Colector4_edificio_inicial(edificio):
+	_edificio_inicial(edificio)
+func _on_Repetidor_edificio_inicial(edificio):
+	_edificio_inicial(edificio)
 	
+func _edificio_inicial(edificio):
+	edificio._construir(edificios)
+	edificios.append(edificio)
+	edificio._conectar(self)

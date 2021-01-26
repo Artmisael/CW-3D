@@ -2,13 +2,15 @@ extends Spatial
 
 signal entrar
 export onready var camara = "repetidor"
-var edificios
+export (bool) onready var inicial = false
+var edificios = []
+signal edificio_inicial
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	$seleccion.altura = Vector3(0,2,0)
 	$seleccion.camara = camara
-	pass # Replace with function body.
+	if inicial:
+		emit_signal("edificio_inicial",self)
 
 func _construir(edificios_anteriores):
 	edificios = edificios_anteriores
@@ -17,7 +19,9 @@ func _construir(edificios_anteriores):
 	
 func _conectar(jugador):
 	pass
-
+	
+func _ubicasion():
+	return (to_global(Vector3(0,2,0)))
 
 func _deselecionar():
 	$seleccion/selecionado.hide()

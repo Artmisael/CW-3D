@@ -2,15 +2,11 @@ extends Spatial
 
 export (bool) onready var inicial = false
 var edificios = []
+signal edificio_inicial
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	if inicial:
+		emit_signal("edificio_inicial",self)
 
 func _entrar():
 	pass
@@ -18,6 +14,7 @@ func _entrar():
 func _construir(edificios_anteriores):
 	edificios = edificios_anteriores
 	$AnimationPlayer.play("metralla")
+	$metralla2/custom/SpotLight.show()
 	pass
 	
 func _conectar(jugador):

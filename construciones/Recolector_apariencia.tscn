@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://ladrilobase.obj" type="ArrayMesh" id=1]
 [ext_resource path="res://construciones/Recolector_apariencia.gd" type="Script" id=2]
@@ -168,6 +168,12 @@ radius = 5.0
 [sub_resource type="SphereShape" id=21]
 radius = 1.5
 
+[sub_resource type="SpatialMaterial" id=22]
+params_billboard_mode = 1
+
+[sub_resource type="QuadMesh" id=23]
+material = SubResource( 22 )
+
 [node name="Colector" type="Spatial"]
 script = ExtResource( 2 )
 
@@ -252,24 +258,40 @@ material/0 = SubResource( 15 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Colector = SubResource( 17 )
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
+[node name="alcanse" type="MeshInstance" parent="."]
 visible = false
 mesh = SubResource( 18 )
 material/0 = SubResource( 19 )
 
-[node name="Area" type="Area" parent="MeshInstance"]
+[node name="competecia" type="Area" parent="alcanse"]
 collision_layer = 0
-collision_mask = 2147483652
+collision_mask = 2147483656
 
-[node name="CollisionShape" type="CollisionShape" parent="MeshInstance/Area"]
+[node name="CollisionShape" type="CollisionShape" parent="alcanse/competecia"]
 shape = SubResource( 20 )
 disabled = true
 
 [node name="Area" type="Area" parent="." groups=[
 "colector",
 ]]
-collision_layer = 4
+collision_layer = 12
 collision_mask = 2
 
 [node name="CollisionShape" type="CollisionShape" parent="Area"]
 shape = SubResource( 21 )
+
+[node name="carga" type="Timer" parent="."]
+one_shot = true
+
+[node name="conecion" type="RayCast" parent="."]
+cast_to = Vector3( 0, 10, 0 )
+collide_with_areas = true
+
+[node name="Particles" type="CPUParticles" parent="conecion"]
+visible = false
+emitting = false
+amount = 1
+mesh = SubResource( 23 )
+[connection signal="area_entered" from="alcanse/competecia" to="." method="_on_competecia_area_entered"]
+[connection signal="area_exited" from="alcanse/competecia" to="." method="_on_competecia_area_exited"]
+[connection signal="timeout" from="carga" to="." method="_on_carga_timeout"]

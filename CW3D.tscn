@@ -146,11 +146,57 @@ modelo_metralla = ExtResource( 7 )
 
 [node name="nave_principal" parent="." instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 20, 20 )
+
+[node name="Repetidor" parent="nave_principal/puente_de_mando" index="0"]
+inicial = true
+
+[node name="repetidor" parent="nave_principal/puente_de_mando/Repetidor" index="0"]
+visible = false
+
+[node name="seleccion" parent="nave_principal/puente_de_mando/Repetidor" index="1"]
+transform = Transform( 1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 1, 0 )
+
+[node name="Metralla" parent="nave_principal/CSGTorus/metrallas" index="0"]
+inicial = true
+
+[node name="Metralla2" parent="nave_principal/CSGTorus/metrallas" index="1"]
+inicial = true
+
+[node name="Metralla3" parent="nave_principal/CSGTorus/metrallas" index="2"]
+inicial = true
+
+[node name="Metralla4" parent="nave_principal/CSGTorus/metrallas" index="3"]
+inicial = true
+
+[node name="Colector" parent="nave_principal/CSGTorus/recolectores" index="0"]
+inicial = true
+
+[node name="Colector2" parent="nave_principal/CSGTorus/recolectores" index="1"]
+inicial = true
+
+[node name="Colector3" parent="nave_principal/CSGTorus/recolectores" index="2"]
+inicial = true
+
+[node name="Colector4" parent="nave_principal/CSGTorus/recolectores" index="3"]
+inicial = true
 [connection signal="camara" from="jugador" to="terreno" method="_on_jugador_camara"]
 [connection signal="ejecutar" from="jugador" to="terreno" method="_on_jugador_ejecutar"]
 [connection signal="ver" from="jugador" to="terreno" method="_on_jugador_ver"]
 [connection signal="construir" from="terreno" to="edificios" method="_on_terreno_construir"]
 [connection signal="tamanio" from="terreno" to="jugador" method="_on_terreno_tamanio"]
 [connection signal="edificio_nuevo" from="edificios" to="jugador" method="_on_edificios_edificio_nuevo"]
+[connection signal="edificio_inicial" from="nave_principal/puente_de_mando/Repetidor" to="jugador" method="_on_Repetidor_edificio_inicial"]
+[connection signal="edificio_inicial" from="nave_principal/CSGTorus/metrallas/Metralla" to="jugador" method="_on_Metralla_edificio_inicial"]
+[connection signal="edificio_inicial" from="nave_principal/CSGTorus/metrallas/Metralla2" to="jugador" method="_on_Metralla2_edificio_inicial"]
+[connection signal="edificio_inicial" from="nave_principal/CSGTorus/metrallas/Metralla3" to="jugador" method="_on_Metralla3_edificio_inicial"]
+[connection signal="edificio_inicial" from="nave_principal/CSGTorus/metrallas/Metralla4" to="jugador" method="_on_Metralla4_edificio_inicial"]
+[connection signal="edificio_inicial" from="nave_principal/CSGTorus/recolectores/Colector" to="jugador" method="_on_Colector_edificio_inicial"]
+[connection signal="edificio_inicial" from="nave_principal/CSGTorus/recolectores/Colector2" to="jugador" method="_on_Colector2_edificio_inicial"]
+[connection signal="edificio_inicial" from="nave_principal/CSGTorus/recolectores/Colector3" to="jugador" method="_on_Colector3_edificio_inicial"]
+[connection signal="edificio_inicial" from="nave_principal/CSGTorus/recolectores/Colector4" to="jugador" method="_on_Colector4_edificio_inicial"]
 
 [editable path="nave_principal"]
+
+[editable path="nave_principal/puente_de_mando/Repetidor"]
+
+[editable path="nave_principal/puente_de_mando/Repetidor/seleccion"]

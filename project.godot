@@ -171,6 +171,7 @@ rapido_derecha={
 3d_render/layer_3="Sismica"
 3d_physics/layer_3="edificios"
 3d_render/layer_4="Armas"
+3d_physics/layer_4="recolecion"
 
 [rendering]
 
